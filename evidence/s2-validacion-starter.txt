@@ -1,0 +1,31 @@
+VALIDACIÓN DEL STARTER C2 — 2026-08-13
+
+=== VERDE INICIAL ===
+> playwright test
+
+
+Running 1 test using 1 worker
+
+  ✓  1 tests/primer-ciclo.spec.ts:3:5 › muestra el panel QA (405ms)
+
+  1 passed (1.0s)
+
+=== ROJO CONTROLADO (exit=1) ===
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+    Locator: getByRole('heading', { name: 'Panel inexistente' })
+    Expected: visible
+    Error: element(s) not found
+    [2m  - waiting for getByRole('heading', { name: 'Panel inexistente' })[22m
+    > 11 |   await expect(page.getByRole('heading', { name: 'Panel inexistente' })).toBeVisible();
+    test-results/primer-ciclo-muestra-el-panel-QA/test-failed-1.png
+  1 failed
+
+=== VERDE RESTAURADO ===
+> playwright test
+
+
+Running 1 test using 1 worker
+
+  ✓  1 tests/primer-ciclo.spec.ts:3:5 › muestra el panel QA (111ms)
+
+  1 passed (474ms)

@@ -1,0 +1,16 @@
+{
+  "name": "qa-automation-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Proyecto acumulativo de la Ruta QA Automation con IA",
+  "scripts": {
+    "test": "playwright test",
+    "test:list": "playwright test --list",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "@types/node": "^24.0.0"
+  }
+}
