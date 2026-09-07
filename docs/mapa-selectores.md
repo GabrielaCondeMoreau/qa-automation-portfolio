@@ -86,3 +86,95 @@ A esto le vamos a sumar los locators de Playwright (`getByRole`, `getByLabel`, `
 buscan por **cómo una persona percibe** el elemento — un criterio que CSS no puede expresar. Y ahí sí
 vas a registrar decisiones, porque vas a tener algo que hoy no tienes: **evidencia de una ejecución**,
 no de una mirada.
+
+# Refinamiento de S4
+
+Hoy le sumamos a lo anterior funciones de Playwright como `getByLabel` y `getByRole`. Por ejemplo,
+`getByLabel('Email')` busca el campo asociado a la etiqueta Email, y
+`getByRole('button', { name: 'Iniciar sesión' })` busca el botón con ese nombre.
+
+## LEES · Instrucción de refinamiento
+
+```text
+Para cada selector CSS ya comprobado, propone un locator de Playwright que represente cómo una
+persona reconoce el elemento. Usa solo información observable en el HTML entregado. Señala qué
+condición podría hacer fallar tu propuesta. No modifiques archivos y detente para que yo valide.
+
+Ejemplo del formato esperado: para un campo con la etiqueta visible Email, una propuesta puede ser
+page.getByLabel('Email'). Explica siempre qué texto, etiqueta o rol del HTML respalda la propuesta.
+```
+
+Comparada con la instrucción de S3 cambió una cosa y se agregó otra:
+
+- **Cambió el criterio:** ya no pedimos "cómo está construido" sino "cómo lo reconoce una persona".
+- **Se agregó:** *"señala qué condición podría hacer fallar tu propuesta"*. No le pedimos que nos diga
+  que su respuesta es buena, sino **cuándo dejaría de serlo**.
+
+## ESCRIBES · Comparación CSS ↔ locator
+
+> **Por qué aquí sí se escribe y en S3 no.** La columna que manda es **Evidencia ejecutable**: lo que
+> devolvió `npm test`. Un locator sin ejecutar sigue siendo una propuesta, y una propuesta no se
+> registra.
+
+| Elemento | Selector CSS | Locator de Playwright propuesto | Evidencia ejecutable | Decisión y límite |
+|---|---|---|---|---|
+| Campo email | `#email` | `page.getByLabel('Email')` | `1 passed`; único y visible | Aceptado; depende de que la etiqueta `Email` siga asociada al campo y lo identifique de forma única |
+| Campo contraseña | `#password` | `page.getByLabel('Contraseña')` | `1 passed`; único y visible | Aceptado; depende de que la etiqueta `Contraseña` siga asociada al campo y lo identifique de forma única |
+| Botón Iniciar sesión | `button[type="submit"]` | `page.getByRole('button', { name: 'Iniciar sesión' })` | `1 passed`; único y visible | Aceptado; depende de que conserve el rol `button` y el nombre accesible `Iniciar sesión` |
+| Caso donde conservamos CSS o test id (opcional) | | No aplica | | |
+
+La última fila es opcional. Complétala solo si encuentras un caso real donde el elemento no tiene una
+señal que la persona perciba —por ejemplo, un contenedor sin nombre visible— o donde el equipo mantiene
+un atributo para pruebas. **No inventes un caso ni una ejecución para llenar la fila.**
+
+## ESCRIBES · Elemento nuevo pedido a la IA, verificado ejecutando
+
+> Elige un elemento que **no** esté arriba. Pídele a la IA **un** locator con la instrucción de
+> refinamiento, pégalo en la única línea marcada de `tests/comprobar-propuesta-ia.spec.ts` y ejecuta:
+>
+> ```bash
+> npm test -- tests/comprobar-propuesta-ia.spec.ts
+> ```
+
+| Elemento | Locator propuesto por la IA | Condición de fallo que ella señaló | Resultado de la ejecución | Decisión |
+| Título de la página | `page.getByRole('heading', { name: 'Iniciar sesión' })` | Fallaría si deja de ser un encabezado, cambia su nombre accesible o aparece otro encabezado con el mismo nombre | `1 passed`; encontró un único elemento visible | Aceptado; la propuesta quedó confirmada por la ejecución |
+| Título de la página | | | `1 passed` / `Expected: 1` `Received: …` | |
+
+**Gate:** no es "¿la IA acertó?". Es **puedo decir de dónde salió cada cosa**: qué propuso, qué
+condición de fallo declaró y qué devolvió el comando. Un locator no es un test: la IA no escribió ni
+una línea de ese archivo.
+
+## Cierre de S4
+
+- [ ] Las tres filas obligatorias tienen su CSS y su locator de Playwright al lado.
+- [ ] Cada locator fue **ejecutado**, no solo leído.
+- [ ] Si encontré un caso real para conservar CSS o test id, completé la fila opcional con su razón.
+
+## Pregunta abierta para S5
+
+Ya tienes locators que encuentran el elemento correcto. ¿Qué falta para que eso sea una **prueba**?
+Encontrar un elemento no es todavía comprobar que la aplicación hace lo que promete.
+
+## Preparación para S5
+
+Completa esta sección siguiendo `Tarea-S5-Consigna.md`:
+
+1. ¿Qué línea abre la página?
+
+   `await page.goto(LOGIN_URL);`
+
+2. ¿Qué tres locators se crean?
+
+   - `const email = page.getByLabel('Email');`
+   - `const password = page.getByLabel('Contraseña');`
+   - `const submit = page.getByRole('button', { name: 'Iniciar sesión' });`
+
+3. ¿Qué se comprueba primero: cantidad o visibilidad?
+
+   Primero se comprueba la cantidad con `toHaveCount(1)` y después la visibilidad con `toBeVisible()`.
+
+4. ¿Qué palabra se repite antes de las acciones y comprobaciones?
+
+   La palabra `await`.
+
+> Creo que `await` sirve para _esperar que cargue el elemento___________. En S5 lo comprobaremos ejecutando el código.
