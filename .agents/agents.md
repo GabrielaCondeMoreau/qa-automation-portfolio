@@ -22,7 +22,7 @@
 | **Proyecto** | `qa-automation-portfolio` — el repositorio que crece durante toda la ruta |
 | **Sistema bajo prueba** | Academia sin Humo · `https://playground.calidadsinhumo.com` |
 | **Especificación** | `https://playground.calidadsinhumo.com/documentacion` |
-| **Estado hoy** | documentación viva + una skill. Todavía **no hay tests**: el primero se escribe en C10 |
+| **Estado hoy** | documentación viva + reglas cosechadas + dos skills. Todavía **no hay tests**: el primero se escribe en C10 |en C10 |
 | **Responsable de las decisiones** | la QA dueña del repositorio. Ninguna capacidad de acá firma nada |
 
 ---
@@ -39,7 +39,8 @@ Ningún pedido vuelve a pegar este contenido en el chat. Se señala el archivo.
 | `docs/contrato-api.md` | contrato dado + discrepancias observadas + incógnitas + la lista cruda de candidatos | C6 |
 | `docs/estrategia-automatizacion.md` | el backlog priorizado y firmado: fuente, score, decisión y razón | C7 |
 | `.agents/rules/criterio-qa.md` | las reglas estables, siempre activas | C7 (semilla) · C8 (cosechado) |
-
+| `docs/HU-login.md` · `docs/HU-registro.md` | las historias de usuario del login y del registro, con sus criterios y requerimientos | C8 |
+| `docs/casos-login.md` | los casos del login, cada uno con su fuente, y las preguntas abiertas | C8 |
 ---
 
 ## 3. Capacidades registradas
@@ -56,6 +57,19 @@ Ningún pedido vuelve a pegar este contenido en el chat. Se señala el archivo.
 | **Cuándo pide decisión humana** | siempre que un puntaje dependa de un dato que no está en el repositorio |
 | **Nació en** | C7, empaquetando un procedimiento ejecutado a mano tres veces en la misma clase |
 
+### `derivar-casos-de-hu` · skill
+
+| | |
+|---|---|
+| **Dónde vive** | `.agents/skills/derivar-casos-de-hu/SKILL.md` |
+| **Qué hace** | recorre una historia de usuario por capas —contexto, reglas, preguntas, riesgos— y deriva casos de prueba ordenados por riesgo, cada uno con criterio, requerimiento y fragmento textual |
+| **Qué NO hace** | no firma, no ejecuta, no escribe tests y no modifica archivos. El detalle vive en la sección 4 del `SKILL.md` |
+| **Qué necesita de entrada** | una historia con criterios de aceptación identificados; los requerimientos y las notas del equipo, si existen |
+| **Dónde deja la salida** | en la conversación. La QA la revisa con los gates y la guarda en `docs/casos-<funcionalidad>.md` |
+| **Cuándo pide decisión humana** | ver la sección 5 del `SKILL.md` |
+| **Reglas que aplica** | `.agents/rules/criterio-qa.md`, en especial la sección 5: un caso sin fuente no es un caso |
+| **Nació en** | C8, empaquetando cómo se dirigió a la IA capa por capa sobre el login: los cinco pedidos son los pasos y los gates son los límites |
+
 ---
 
 ## 4. Cómo crece este archivo
@@ -64,7 +78,7 @@ Se agregan filas; no se borran las anteriores. Lo previsto en la ruta:
 
 | Clase | Qué se registra |
 |---|---|
-| C8 | la segunda skill del repositorio, empaquetada en autonomía |
+| C8 | la segunda skill del repositorio: `derivar-casos-de-hu`, recibida terminada y recorrida línea por línea · y las reglas cosechadas en `criterio-qa.md` |
 | C9 | el workflow `generar-y-juzgar` y la skill `revisar-con-rubrica` |
 | C11 | la skill `diagnosticar-fallo-playwright` |
 | C14 | el agente `pom-agent` |

@@ -120,6 +120,23 @@ dirección: más alto = mejor candidato a automatizar.**
 - **Quién propuso los puntajes:** `.agents/skills/priorizar-automatizacion` · corrida del 2026-09-21
 - **Lo que NO firmo todavía, y qué dato me falta:** Ninguna fila queda sin firmar. Los valores de estabilidad de E3 y L2 son provisionales porque no tengo evidencia histórica de que esas respuestas lleven meses sin cambiar.
 
+### Segunda corrida · los ocho casos del login
+
+| # | Candidato | Fuente | Frec | Estab | Riesgo | Mant | Total | Zona | Qué dato me falta | Decisión (mía) | Razón (mía) |
+|---|---|---|---:|---:|---:|---:|---:|---|---|---|---|
+| 1 | Login con credenciales válidas → mensaje de bienvenida con el nombre | `casos-login.md` §5 caso 1 · CA4 · REQ-L04 | 3 | 3 | 3 | 3 | 12 | 🟢 | — | AUTOMATIZAR YA | Es el acceso principal al sistema, tiene riesgo alto, credenciales controladas y locators ya comprobados. |
+| 2 | Contraseña incorrecta | `casos-login.md` §5 caso 2 · CA2 · REQ-L02 | 3 | `SIN CONTEXTO` | 3 | 2 | `SIN CONTEXTO` | `SIN CONTEXTO` | Falta historial de estabilidad de REQ-L02 | AUTOMATIZAR YA | Protege contra el acceso con una contraseña incorrecta. Aunque el texto exacto esté pendiente, la historia exige un mensaje de error y que no se inicie sesión. |
+| 3 | Email no registrado | `casos-login.md` §5 caso 3 · CA2 · REQ-L02 | 3 | `SIN CONTEXTO` | 3 | 2 | `SIN CONTEXTO` | `SIN CONTEXTO` | Falta historial de estabilidad de REQ-L02 | AUTOMATIZAR YA | Protege contra el acceso con un email no registrado. Usa datos baratos de preparar y cubre un control de acceso de riesgo alto. |
+| 4 | Quinto intento fallido → botón deshabilitado y timer | `casos-login.md` §5 caso 4 · CA3 · REQ-L03 | 3 | `SIN CONTEXTO` | 3 | `SIN CONTEXTO` | `SIN CONTEXTO` | `SIN CONTEXTO` | Faltan estabilidad de CA3, definición del conteo de intentos (P4) y mecanismo de reset (P6) | DESPUÉS | El riesgo es alto, pero primero necesito definir cómo se cuentan los intentos y cómo preparar o resetear el bloqueo de forma reproducible. |
+| 5 | Cuarto intento fallido → no se bloquea | `casos-login.md` §5 caso 5 · CA3 · REQ-L03 | 3 | `SIN CONTEXTO` | 3 | `SIN CONTEXTO` | `SIN CONTEXTO` | `SIN CONTEXTO` | Faltan estabilidad de CA3, definición del conteo de intentos (P4) y mecanismo de reset (P6) | DESPUÉS | Es el límite inferior del bloqueo y conviene automatizarlo junto con el caso 4 cuando P4 y P6 estén resueltas. |
+| 6 | Fin del bloqueo → se habilita en 0 | `casos-login.md` §5 caso 6 · CA3 · REQ-L03 | 3 | `SIN CONTEXTO` | 2 | `SIN CONTEXTO` | `SIN CONTEXTO` | `SIN CONTEXTO` | Faltan estabilidad de CA3, locator del timer y procedimiento reproducible de preparación/reset (P4 y P6) | DESPUÉS | Requiere el locator del timer y un procedimiento reproducible para llegar al estado bloqueado y restaurarlo. |
+| 7 | Email vacío | `casos-login.md` §5 caso 7 · CA1 · REQ-L01 | 3 | `SIN CONTEXTO` | 1 | 2 | `SIN CONTEXTO` | `SIN CONTEXTO` | Faltan estabilidad de REQ-L01 y señal observable del rechazo (P3) | DESPUÉS | Tiene fuente, pero el riesgo es bajo y todavía falta definir qué señal observable demuestra el rechazo del email vacío. |
+| 8 | Contraseña vacía | `casos-login.md` §5 caso 8 · CA1 · REQ-L01 | 3 | `SIN CONTEXTO` | 1 | 2 | `SIN CONTEXTO` | `SIN CONTEXTO` | Faltan estabilidad de REQ-L01 y señal observable del rechazo (P3) | DESPUÉS | Tiene fuente, pero el riesgo es bajo y todavía falta definir qué señal observable demuestra el rechazo de la contraseña vacía. |
+
+
+- **Firmo yo:** Gabriela Conde Moreau
+- **Fecha:** 2026-10-05
+
 ---
 
 ## 4. Los descartes, con su razón

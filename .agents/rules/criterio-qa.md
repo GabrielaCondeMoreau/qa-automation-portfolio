@@ -63,7 +63,6 @@ enseña justo lo contrario de lo que dice.
 > Cosas que le repetiste a la IA más de una vez entre C1 y C7, en pedidos de temas distintos.
 
 -- No presentar como hecho nada que no tenga respaldo en la fuente; marcar explícitamente `SIN FUENTE`, `SIN CONTEXTO` o `INFERENCIA`. C1 · C6 · C7.
-- Separar lo esperado, lo predicho y lo realmente observado al ejecutar. C1 · C5 · C6.
 - No modificar archivos ni escribir tests cuando el pedido sea solamente analizar, explicar o proponer. C2 · C3 · C4 · C7.
 -
 -
@@ -77,6 +76,12 @@ enseña justo lo contrario de lo que dice.
 - Introducir un cambio controlado, observar el fallo, restaurar el archivo y volver a ejecutar hasta obtener verde. C2 · C5.
 - Comparar el contrato o requerimiento con la respuesta ejecutada y registrar coincidencias, discrepancias e incógnitas. C1 · C6.
 -
+## 5. Cosechadas en C8
+
+| Regla | Cuándo aplica | Nació en |
+|---|---|---|
+| Un caso sin fuente no es un caso. Cada caso de prueba cita el criterio de aceptación o el requerimiento del que sale y el fragmento textual que lo justifica. Si no encuentras el fragmento, el caso no entra a la tabla: se escribe como pregunta abierta, con lo que haría falta saber para convertirlo en caso. | cualquier caso de prueba, escenario o test | C8 |
+| Separar siempre lo esperado, lo predicho y lo observado. Si algo todavía no se ejecutó, no se presenta como evidencia: se marca como predicción o como pendiente de comprobación. | análisis, diagnósticos y reportes de ejecución | C1 · C5 · C6 |
 -
 -
 
