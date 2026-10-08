@@ -83,6 +83,13 @@ enseña justo lo contrario de lo que dice.
 | Un caso sin fuente no es un caso. Cada caso de prueba cita el criterio de aceptación o el requerimiento del que sale y el fragmento textual que lo justifica. Si no encuentras el fragmento, el caso no entra a la tabla: se escribe como pregunta abierta, con lo que haría falta saber para convertirlo en caso. | cualquier caso de prueba, escenario o test | C8 |
 | Separar siempre lo esperado, lo predicho y lo observado. Si algo todavía no se ejecutó, no se presenta como evidencia: se marca como predicción o como pendiente de comprobación. | análisis, diagnósticos y reportes de ejecución | C1 · C5 · C6 |
 -
+## 6. Cosechadas en C10
+
+| Regla | Cuándo aplica | Nació en |
+|---|---|---|
+| Si un locator se apoya en la apariencia o en la estructura de la página —una clase de CSS, una cadena tipo `form div > input`, XPath—, no entra. En su lugar va el locator que representa cómo una persona reconoce el elemento: `getByRole`, `getByLabel`, `getByText`. `getByTestId` entra cuando conservarlo es la decisión correcta y puedo explicar por qué: el elemento no tiene ninguna señal que una persona perciba, o lo que el test verifica es justamente su texto —y un elemento no se busca por el mismo texto que se está comprobando—. Se comprueba así: de cada locator del archivo puedo señalar la fila de `recursos-s10/mapa-selectores-c10.md` o la línea de la fuente de demostración de C10 de donde salió. | cualquier test o selector | C3 · C4 |
+| Ningún selector se da por bueno sin comprobarlo antes contra el DOM real: en DevTools, pestaña Elements, buscándolo y mirando dos cosas —cuántas coincidencias hay y si la resaltada es la que quería—, o ejecutándolo. Un selector que se ve razonable y que nadie comprobó sigue siendo una propuesta. Se comprueba así: la fila de ese elemento en `recursos-s10/mapa-selectores-c10.md` tiene escrita su evidencia; si esa celda está vacía, el locator no entra al test. | cualquier locator, lo haya propuesto yo o la IA | C3 · C4 |
+| Ninguna espera fija: nada de `waitForTimeout`, `sleep` ni un número de milisegundos suelto para «darle tiempo a que cargue». En su lugar va `await` sobre el locator o sobre el `expect`, que consulta la página y reintenta solo hasta el timeout. Se comprueba así: buscar `waitForTimeout` y `sleep` dentro del archivo de test no devuelve ninguna línea. | cualquier test de Playwright | C5 · C10 |
 -
 
 ---

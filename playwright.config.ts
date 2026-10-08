@@ -8,6 +8,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   timeout: 15_000,
   use: {
+    baseURL: 'https://playground.calidadsinhumo.com',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },

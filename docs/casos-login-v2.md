@@ -14,7 +14,6 @@
 ## 1. Contexto
 
 |                  |                                                                                                                            |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | **Objetivo**     | Permitir que una estudiante registrada inicie sesión para acceder a su cuenta y sus cursos.                                |
 | **Quién lo usa** | Estudiante registrada en la academia.                                                                                      |
 | **Camino feliz** | Ingresa email y contraseña válidos → el sistema la autentica → muestra un mensaje de bienvenida con su nombre.             |
@@ -115,3 +114,10 @@
 ---
 
 *Producido con la skill `derivar-casos-de-hu` · reglas de `criterio-qa.md` · qa-automation-portfolio · Ruta QA Automation con IA · 2026-09-21*
+## 10. Lo que me costó al afirmar sobre el caso negativo (para C11)
+
+- **Qué escribí como verificación:** comprobé que apareciera el elemento `login-error` con el texto `Email o contraseña incorrectos`, que el campo Email siguiera visible y que el mensaje de login exitoso tuviera 0 coincidencias.
+- **Qué dio al correr el test negativo:** pasó; mostró el error esperado, permaneció el formulario y no apareció el mensaje de éxito.
+- **Qué dio al pegarla en el test positivo (la prueba de control):** falló como esperaba; Playwright esperaba 0 coincidencias para `Has iniciado sesión correctamente.`, pero encontró 1 (`Expected: 0`, `Received: 1`).
+- **Qué quedé sin saber:** por qué el DOM inspeccionado manualmente mostró `data-testid="cuenta-acceso-error"`, mientras que el DOM visto durante la ejecución de Playwright mostró `data-testid="login-error"`.
+- **Rojos observados:** el test positivo dio `Received: 1` al exigir que el mensaje de éxito no existiera; el negativo dio `element(s) not found` cuando usó el locator incorrecto `cuenta-acceso-error`.
