@@ -70,6 +70,19 @@ Ningún pedido vuelve a pegar este contenido en el chat. Se señala el archivo.
 | **Reglas que aplica** | `.agents/rules/criterio-qa.md`, en especial la sección 5: un caso sin fuente no es un caso |
 | **Nació en** | C8, empaquetando cómo se dirigió a la IA capa por capa sobre el login: los cinco pedidos son los pasos y los gates son los límites |
 
+### `diagnosticar-fallo-playwright` · skill
+
+| | |
+|---|---|
+| **Dónde vive** | `.agents/skills/diagnosticar-fallo-playwright/SKILL.md` |
+| **Qué hace** | lee un rojo o un verde sospechoso de un test de Playwright, lo ubica en una de cuatro lecturas de la salida del runner, nombra la causa con la línea textual que la prueba y propone el cambio mínimo |
+| **Qué NO hace** | no arregla hasta verde, no agrega esperas fijas ni sube timeouts, no copia el `Received` al `Expected` sin fuente, no toca archivos que no sean el test y no decide si el producto está bien |
+| **Qué necesita de entrada** | el archivo del test completo + la salida completa del runner + qué tenía que pasar, según la fuente + `.agents/rules/criterio-qa.md`, sección 6 |
+| **Dónde deja la salida** | en la conversación, seis líneas: LECTURA · CAUSA · EVIDENCIA · ARCHIVO Y LÍNEA · CAMBIO MÍNIMO · CÓMO SE COMPRUEBA. No aplica el cambio hasta que la QA lo pida |
+| **Cuándo pide decisión humana** | ver la sección 5 del `SKILL.md` |
+| **Reglas que aplica** | `.agents/rules/criterio-qa.md`, en especial la sección 6: primero la causa, después el cambio |
+| **Nació en** | C11, empaquetando las cuatro lecturas que se ejecutaron a mano en C10 y C11 sobre `tests/e2e/login.spec.ts` |
+
 ---
 
 ## 4. Cómo crece este archivo
