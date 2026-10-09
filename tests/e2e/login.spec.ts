@@ -16,24 +16,64 @@ test('L1 · login con credenciales válidas muestra el saludo', async ({ page })
   await expect(saludo).toHaveText('¡Hola, Ana!');
 });
 
-test('L2 · Login con contraseña incorrecta no entra y muestra el error', async ({ page }) => {
+test('C02 · login con email no registrado muestra error', async ({ page }) => {
   // Fuente: REQ-L02
 
   // PREPARAR
   await page.goto('/login');
-  await page.getByLabel('Email').fill('ana.garcia@ejemplo.com');
-  await page.getByLabel('Contraseña').fill('malamala');
 
   // ACTUAR
+  await page.getByLabel('Email').fill('noexiste@ejemplo.com');
+  await page.getByLabel('Contraseña').fill('Segura2026!');
   await page.getByRole('button', { name: 'Iniciar sesión' }).click();
 
   // VERIFICAR
-  const error = page.getByTestId('login-error');
-
-  await expect(error).toBeVisible();
-  await expect(error).toHaveText('Email o contraseña incorrectos');
-  await expect(page.getByLabel('Email')).toBeVisible();
+  await expect(page.getByTestId('login-error')).toHaveText(
+    'Email o contraseña incorrectos',
+  );
+  await expect(page.getByTestId('login-welcome')).not.toBeVisible();
   await expect(
-    page.getByText('Has iniciado sesión correctamente.'),
-  ).toHaveCount(0);
+    page.getByRole('button', { name: 'Iniciar sesión' }),
+  ).toBeVisible();
+});
+
+test('C03 · login con contraseña incorrecta muestra error y no entra', async ({ page }) => {
+  // Fuente: REQ-L02
+
+  // PREPARAR
+  await page.goto('/login');
+
+  // ACTUAR
+  await page.getByLabel('Email').fill('ana.garcia@ejemplo.com');
+  await page.getByLabel('Contraseña').fill('Incorrecta1!');
+  await page.getByRole('button', { name: 'Iniciar sesión' }).click();
+
+  // VERIFICAR
+  await expect(page.getByTestId('login-error')).toHaveText(
+    'Email o contraseña incorrectos',
+  );
+  await expect(page.getByTestId('login-welcome')).not.toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Iniciar sesión' }),
+  ).toBeVisible();
+});
+
+test('C04 · login con email vacío muestra error de campo obligatorio', async ({ page }) => {
+  // Fuente: REQ-L01
+
+  // PREPARAR
+  await page.goto('/login');
+
+  // ACTUAR
+  await page.getByLabel('Contraseña').fill('Segura2026!');
+  await page.getByRole('button', { name: 'Iniciar sesión' }).click();
+
+  // VERIFICAR
+  await expect(page.getByTestId('login-error')).toHaveText(
+    'El email es obligatorio',
+  );
+  await expect(page.getByTestId('login-welcome')).not.toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Iniciar sesión' }),
+  ).toBeVisible();
 });

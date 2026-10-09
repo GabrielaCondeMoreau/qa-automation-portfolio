@@ -121,3 +121,11 @@
 - **Qué dio al pegarla en el test positivo (la prueba de control):** falló como esperaba; Playwright esperaba 0 coincidencias para `Has iniciado sesión correctamente.`, pero encontró 1 (`Expected: 0`, `Received: 1`).
 - **Qué quedé sin saber:** por qué el DOM inspeccionado manualmente mostró `data-testid="cuenta-acceso-error"`, mientras que el DOM visto durante la ejecución de Playwright mostró `data-testid="login-error"`.
 - **Rojos observados:** el test positivo dio `Received: 1` al exigir que el mensaje de éxito no existiera; el negativo dio `element(s) not found` cuando usó el locator incorrecto `cuenta-acceso-error`.
+
+- **Con cuál test repetido me quedé y por qué (C11):** conservé C03 con la contraseña `Incorrecta1!` y eliminé L2 con `malamala`, porque ambos cubrían REQ-L02 con el mismo email y el mismo resultado esperado; mantener ambos duplicaba costo y reportaba dos veces el mismo fallo.
+- **Qué dio la prueba de control de cada línea de C02 y C04 (C11):** la línea del error de C02 dio rojo con `element(s) not found`; la línea del error de C04 dio rojo con `element(s) not found`; el saludo ausente dio rojo con `Expected: not visible` y `Received: visible`; el botón visible dio rojo con `element(s) not found`. Las cuatro distinguen el login negativo del positivo.
+
+- Escribí `page.goto('/login')` 4 veces.
+- Escribí `getByLabel('Email').fill(` 3 veces.
+- Escribí `getByRole('button', { name: 'Iniciar sesión' })` 7 veces.
+- Si mañana el botón se llama «Entrar», tengo que cambiar el código en 7 líneas.
