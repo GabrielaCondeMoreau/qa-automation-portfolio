@@ -89,6 +89,10 @@ no de una mirada.
 
 # Refinamiento de S4
 
+> **Retirada en C12 (7 de octubre de 2026).** Los locators del login viven en `pages/login.page.ts`:
+> es código que se ejecuta y que avisa cuando está mal. Esta tabla queda como registro de **por qué**
+> se eligió cada uno y ya no se actualiza. Si un locator del login cambia, se cambia en el page object.
+
 Hoy le sumamos a lo anterior funciones de Playwright como `getByLabel` y `getByRole`. Por ejemplo,
 `getByLabel('Email')` busca el campo asociado a la etiqueta Email, y
 `getByRole('button', { name: 'Iniciar sesión' })` busca el botón con ese nombre.

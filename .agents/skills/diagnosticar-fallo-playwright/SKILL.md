@@ -61,7 +61,7 @@ código es exactamente lo que esta skill existe para evitar.
    | # | Lo que dice la salida | Qué pasó | Qué se revisa |
    |---|---|---|---|
    | 1 | `expect(locator)…` con `Locator:`, `Expected:` **y** `Received:` | el elemento apareció y dice otra cosa | **el producto o la expectativa**: se compara `Expected` con la fuente |
-   | 2 | `expect(locator)…` con `Expected:` y `element(s) not found`, **sin** `Received:` | el elemento no apareció en todo el tiempo de espera | **el locator** contra `docs/mapa-selectores.md`, **o el paso anterior**, que quizás nunca llegó |
+   | 2 | `expect(locator)…` con `Expected:` y `element(s) not found`, **sin** `Received:` | el elemento no apareció en todo el tiempo de espera | **el locator** contra el Page Object del test en `pages/`, **o el paso anterior**, que quizás nunca llegó |
    | 3 | `expect(received)…` con `Expected:` y `Received:`, **sin** línea `Locator:` ni `Timeout:` | la aserción juzgó un valor leído **una sola vez**: una foto de un instante | si a `expect` se le pasó un valor ya leído (`isVisible()`, `count()`, `textContent()`) en lugar del locator |
    | 4 | **verde**, y es un caso negativo o una aserción nueva | todavía nada: hay que medir la aserción | la **prueba de control** del paso 5 |
 
@@ -76,7 +76,7 @@ código es exactamente lo que esta skill existe para evitar.
    | Lectura | Cambio mínimo |
    |---|---|
    | 1 | si la fuente respalda el `Received`, se corrige la expectativa; **si la fuente no fija el texto, no se cambia nada: se pide decisión** (sección 6) |
-   | 2 | se corrige el locator según el mapa, o se corrige el paso anterior que no llegó |
+   | 2 | se corrige el locator en el Page Object del test en `pages/`, o se corrige el paso anterior que no llegó |
    | 3 | se le pasa a `expect` el **locator**, no el valor: `await expect(page.getByTestId('…')).toBeVisible()` o `.toHaveText('…')`. Así la aserción reintenta sola hasta el timeout |
    | 4 | se quita o se reemplaza la aserción que no distingue; y se ordena: primero la aserción que espera la respuesta |
 
@@ -104,11 +104,12 @@ código es exactamente lo que esta skill existe para evitar.
   con la salida nueva. No prueba otro cambio, y otro, y otro, hasta que algo pase.
 - **No copia el `Received` al `Expected` sin fuente.** Eso pone el test verde y esconde justo lo que
   el test tenía que detectar.
-- **No cambia un locator por otro que «también funciona»** sin que el nuevo esté en el mapa con su
-  evidencia.
+- **No cambia un locator por otro que «también funciona»** sin que el nuevo esté en el Page Object
+  del test en `pages/`.
 - **No decide si el producto está bien.** Dice qué muestra la pantalla; si eso es correcto lo decide
   el negocio.
-- **No toca archivos que no sean el test**, ni el `playwright.config.ts`, ni otros tests.
+- **No toca archivos que no sean el test**, salvo que en la lectura 2 sí puede tocar el Page Object
+  de ese test en `pages/`; tampoco el `playwright.config.ts` ni otros tests.
 
 ---
 
@@ -121,7 +122,7 @@ Para y pregunta, en vez de resolver, cuando:
 - el test es flaky y **no se reproduce** en tres corridas;
 - la causa está en el **producto** (cambió, está caído o responde distinto a lo documentado);
 - la única aserción que distinguiría el caso necesita un dato que el entorno no deja preparar;
-- el cambio mínimo obliga a tocar el config, otro test o el mapa de selectores.
+- el cambio mínimo obliga a tocar el config, otro test o el Page Object del test en `pages/`.
 
 ---
 
