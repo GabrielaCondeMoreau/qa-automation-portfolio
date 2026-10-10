@@ -129,3 +129,10 @@
 - Escribí `getByLabel('Email').fill(` 3 veces.
 - Escribí `getByRole('button', { name: 'Iniciar sesión' })` 7 veces.
 - Si mañana el botón se llama «Entrar», tengo que cambiar el código en 7 líneas.
+
+## Cuenta después del refactor de C12
+
+- Escribí `new LoginPage(page)` 4 veces.
+- Escribí `loginPage.goto()` 4 veces.
+- Ambas líneas están en el bloque `PREPARAR` de cada test.
+- Después de agregar C05, escribí `new LoginPage(page)` 5 veces.

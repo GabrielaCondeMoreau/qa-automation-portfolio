@@ -76,3 +76,23 @@ test('C04 · login con email vacío muestra error de campo obligatorio', async (
     loginPage.botonIniciarSesion,
   ).toBeVisible();
 });
+
+// Caso C05 · REQ-L01 · CA1
+// Login con contraseña vacía muestra mensaje de error de campo obligatorio.
+// Fuente: docs/casos-login-v2.md §5, fila C05.
+
+test('C05 · login con contraseña vacía muestra error de campo obligatorio y no entra', async ({ page }) => {
+  // PREPARAR
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+
+  // ACTUAR
+  await loginPage.login('ana.garcia@ejemplo.com', '');
+
+  // VERIFICAR · lo que SÍ pasa, lo que NO pasa, y dónde sigo
+  await expect(loginPage.mensajeError).toHaveText(
+    'La contraseña es obligatoria',
+  );
+  await expect(loginPage.saludo).not.toBeVisible();
+  await expect(loginPage.botonIniciarSesion).toBeVisible();
+});
